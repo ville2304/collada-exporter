@@ -101,6 +101,11 @@ class ExportDAE(bpy.types.Operator, ExportHelper):
         description="Exclude skeleton bones with names beginning with 'ctrl'.",
         default=True,
         )
+    skip_empty_anim_tracks = BoolProperty(
+        name="Skip empty animation tracks",
+        description="If bone action track does not have any keyframes, do not export it.",
+        default=False,
+        )
     use_anim = BoolProperty(
         name="Export Animation",
         description="Export keyframe animation",

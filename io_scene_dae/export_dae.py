@@ -1699,7 +1699,17 @@ class DaeExporter:
                         if((bone.name.startswith("ctrl") and
                                 self.config["use_exclude_ctrl_bones"])):
                             continue
-
+                        if self.config["skip_empty_anim_tracks"]:
+                            fcurves = bpy.context.active_object.animation_data.action.fcurves
+                            ignore_bone = True
+                            for curve in fcurves:
+                                if(curve.data_path.split('"')[1] == bone.name and
+                                        len(curve.keyframe_points) > 0):
+                                    ignore_bone = False
+                                    break
+                            if ignore_bone:
+                                continue
+                        
                         bone_name = self.skeleton_info[node]["bone_ids"][bone]
 
                         if (not (bone_name in xform_cache)):
